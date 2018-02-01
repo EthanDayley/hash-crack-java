@@ -1,5 +1,9 @@
 package io.github.ethandayley;
 
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Class to crack a variety of hashes.
  * Final version should have support for multithreading.
@@ -16,6 +20,38 @@ public class HashCracker {
     //////////////////////////
     // METHODS ONLY BELOW THIS LINE
     //////////////////////////
+
+    /**
+     * Method to get the hash of a given input string,
+     * and a hashing algorithm.
+     *
+     * @param input The string to hash
+     * @param hashType The hashing algorithm to use
+     * @return The byte array representation of the hash of the input
+     */
+    private byte[] getHash(String input, String hashType) {
+        MessageDigest hasher;
+        try {
+            hasher = MessageDigest.getInstance(hashType);
+            hasher.update(input.getBytes());
+            return hasher.digest();
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("hashType \""+hashType +"\" unsupported in HashCracker.getHash");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return null;
+    }
+    /**
+     * Method to crack the given hash.
+     * As of this version, it only cracks SHA1.
+     *
+     * @return The plaintext of the cracked hash.
+     */
+    public String crack() {
+        return "";
+    }
+
     /**
      * Method to set the input hash of the HashCracker.
      *
